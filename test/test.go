@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	data "simple_autodiff/data"
+	datasets "simple_autodiff/datasets"
+	models "simple_autodiff/models"
 	nn "simple_autodiff/nn"
+	utils "simple_autodiff/utils"
 )
 
 func TestBackwardBasicOperations() {
@@ -75,8 +78,22 @@ func TestNN() {
 	}
 }
 
+func TestDataLoader() {
+	ds_x, ds_y := datasets.XORDataset()
+	dl := data.NewDataLoader(ds_x, ds_y, 2)
+
+	model := models.MLP(2, 3, 2)
+	optim := nn.NewSGDOptimizer(model.Parameters(), 0.1)
+	crit := nn.NewMSELoss()
+
+	for epoch := 0; epoch < 5; epoch++ {
+		utils.TrainOneEpoch(model, crit, optim, dl)
+	}
+}
+
 func main() {
 	// TestBackwardBasicOperations()
 	// TestBackwardFunctions()
-	TestNN()
+	// TestNN()
+	TestDataLoader()
 }
