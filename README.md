@@ -1,2 +1,2 @@
 # SimpleAutodiff
-Simple of Autodifferentiation module for teaching purposes
+Simple implementatio of an Autodifferentiation module for teaching purposes.

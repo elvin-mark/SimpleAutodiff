@@ -1,15 +1,18 @@
-package data
+package datasets
 
-import "math"
+import (
+	"math"
+	"simple_autodiff/data"
+)
 
 type DataLoader struct {
-	x         [][]*Variable
-	y         [][]*Variable
+	x         [][]*data.Variable
+	y         [][]*data.Variable
 	batchSize int
 	cursor    int
 }
 
-func NewDataLoader(x [][]*Variable, y [][]*Variable, batchSize int) DataLoader {
+func NewDataLoader(x [][]*data.Variable, y [][]*data.Variable, batchSize int) DataLoader {
 	return DataLoader{
 		x:         x,
 		y:         y,
@@ -25,7 +28,7 @@ func (dl *DataLoader) HasNext() bool {
 	return true
 }
 
-func (dl *DataLoader) Next() (x [][]*Variable, y [][]*Variable) {
+func (dl *DataLoader) Next() (x [][]*data.Variable, y [][]*data.Variable) {
 	x = dl.x[dl.cursor : dl.cursor+dl.batchSize]
 	y = dl.y[dl.cursor : dl.cursor+dl.batchSize]
 	dl.cursor = dl.cursor + dl.batchSize

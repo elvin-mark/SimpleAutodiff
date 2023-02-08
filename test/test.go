@@ -80,7 +80,7 @@ func TestNN() {
 
 func TestDataLoader() {
 	ds_x, ds_y := datasets.XORDataset()
-	dl := data.NewDataLoader(ds_x, ds_y, 2)
+	dl := datasets.NewDataLoader(ds_x, ds_y, 2)
 
 	model := models.MLP(2, 3, 2)
 	optim := nn.NewSGDOptimizer(model.Parameters(), 0.1)

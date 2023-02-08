@@ -2,11 +2,11 @@ package utils
 
 import (
 	"fmt"
-	"simple_autodiff/data"
+	"simple_autodiff/datasets"
 	"simple_autodiff/nn"
 )
 
-func TrainOneEpoch(model nn.Layer, crit nn.Loss, optim nn.Optimizer, dl data.DataLoader) {
+func TrainOneEpoch(model nn.Layer, crit nn.Loss, optim nn.Optimizer, dl datasets.DataLoader) {
 	dl.Rewind()
 	avgLoss := 0.0
 	for dl.HasNext() {
