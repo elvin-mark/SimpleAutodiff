@@ -1,6 +1,6 @@
 package datasets
 
-import "simple_autodiff/data"
+import "github.com/elvin-mark/SimpleAutodiff/data"
 
 func XORDataset() (x [][]*data.Variable, y [][]*data.Variable) {
 	x = [][]*data.Variable{

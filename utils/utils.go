@@ -2,8 +2,9 @@ package utils
 
 import (
 	"fmt"
-	"simple_autodiff/datasets"
-	"simple_autodiff/nn"
+
+	"github.com/elvin-mark/SimpleAutodiff/datasets"
+	"github.com/elvin-mark/SimpleAutodiff/nn"
 )
 
 func TrainOneEpoch(model nn.Layer, crit nn.Loss, optim nn.Optimizer, dl datasets.DataLoader) {

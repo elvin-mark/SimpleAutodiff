@@ -2,7 +2,8 @@ package datasets
 
 import (
 	"math"
-	"simple_autodiff/data"
+
+	"github.com/elvin-mark/SimpleAutodiff/data"
 )
 
 type DataLoader struct {

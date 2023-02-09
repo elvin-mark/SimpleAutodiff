@@ -1,6 +1,6 @@
 package models
 
-import "simple_autodiff/nn"
+import "github.com/elvin-mark/SimpleAutodiff/nn"
 
 func Perceptron(inputs int, outputs int) (model nn.Layer) {
 	model = nn.NewSequentialLayer([]nn.Layer{

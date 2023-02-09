@@ -1,7 +1,7 @@
 package nn
 
 import (
-	data "simple_autodiff/data"
+	data "github.com/elvin-mark/SimpleAutodiff/data"
 )
 
 type Loss interface {

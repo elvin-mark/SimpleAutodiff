@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	data "simple_autodiff/data"
-	datasets "simple_autodiff/datasets"
-	models "simple_autodiff/models"
-	nn "simple_autodiff/nn"
-	utils "simple_autodiff/utils"
+
+	data "github.com/elvin-mark/SimpleAutodiff/data"
+	datasets "github.com/elvin-mark/SimpleAutodiff/datasets"
+	models "github.com/elvin-mark/SimpleAutodiff/models"
+	nn "github.com/elvin-mark/SimpleAutodiff/nn"
+	utils "github.com/elvin-mark/SimpleAutodiff/utils"
 )
 
 func TestBackwardBasicOperations() {
@@ -56,7 +57,7 @@ func TestNN() {
 
 	model := nn.NewSequentialLayer([]nn.Layer{
 		nn.NewLinearLayer(2, 3),
-		nn.NewSigmoidLayer(),
+		nn.NewTanhLayer(),
 		nn.NewLinearLayer(3, 2),
 	})
 
@@ -94,6 +95,6 @@ func TestDataLoader() {
 func main() {
 	// TestBackwardBasicOperations()
 	// TestBackwardFunctions()
-	// TestNN()
-	TestDataLoader()
+	TestNN()
+	// TestDataLoader()
 }

@@ -1,6 +1,6 @@
 package nn
 
-import "simple_autodiff/data"
+import "github.com/elvin-mark/SimpleAutodiff/data"
 
 type Optimizer interface {
 	ZeroGrad()
