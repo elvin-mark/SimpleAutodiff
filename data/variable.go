@@ -56,3 +56,15 @@ func (v *Variable) Pow(w float64) *Variable {
 	o.BackwardHandler = NewPowBackwardFn(v, w, o)
 	return o
 }
+
+func (v *Variable) Log() *Variable {
+	o := NewVariable(math.Log(v.Val))
+	o.BackwardHandler = NewLogBackwardFn(v, o)
+	return o
+}
+
+func (v *Variable) Exp() *Variable {
+	o := NewVariable(math.Exp(v.Val))
+	o.BackwardHandler = NewExpBackwardFn(v, o)
+	return o
+}
