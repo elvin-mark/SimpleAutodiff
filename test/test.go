@@ -93,25 +93,24 @@ func TestDataLoader() {
 }
 
 func TestLossFunction() {
-	ds_x, ds_y := datasets.XORDataset(1)
-	dl := datasets.NewDataLoader(ds_x, ds_y, 1)
-
+	ds_x, ds_y := datasets.ToyCircleDataset(20, 1.5)
+	dl := datasets.NewDataLoader(ds_x, ds_y, 2)
 	model := nn.NewSequentialLayer([]nn.Layer{
-		nn.NewLinearLayer(2, 5),
-		nn.NewTanhLayer(),
-		nn.NewLinearLayer(5, 5),
-		nn.NewTanhLayer(),
+		nn.NewLinearLayer(2, 10),
+		nn.NewReLULayer(),
+		nn.NewLinearLayer(10, 5),
+		nn.NewReLULayer(),
 		nn.NewLinearLayer(5, 2),
 	})
 	optim := nn.NewSGDOptimizer(model.Parameters(), 0.1)
 	crit := nn.NewCrossEntropyLoss()
 
-	for epoch := 0; epoch < 15; epoch++ {
+	for epoch := 0; epoch < 20; epoch++ {
 		utils.TrainOneEpoch(model, crit, optim, dl)
 	}
 	o := model.Forward(ds_x)
-	for _, e := range o {
-		fmt.Println(e[0].Val, e[1].Val)
+	for i, e := range o {
+		fmt.Println(e[0].Val, e[1].Val, ds_y[i][0].Val)
 	}
 
 }
