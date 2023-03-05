@@ -93,7 +93,8 @@ func TestDataLoader() {
 }
 
 func TestLossFunction() {
-	ds_x, ds_y := datasets.ToyCircleDataset(20, 1.5)
+	// ds_x, ds_y := datasets.ToyCircleDataset(20, 1.5)
+	ds_x, ds_y := datasets.Toy2DDataset(20)
 	dl := datasets.NewDataLoader(ds_x, ds_y, 2)
 	model := nn.NewSequentialLayer([]nn.Layer{
 		nn.NewLinearLayer(2, 10),

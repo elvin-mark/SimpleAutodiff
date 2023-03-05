@@ -1,9 +1,11 @@
 # SimpleAutodiff
-Simple implementation of an scalar autodifferentiation module for learning purpose. This module defines a type `Variable` and mathematical operations for this type. In each operation, a Backward function `BackwardFn` is generated, this instance records the inputs and outputs of the operation as well as defined the backward operation. 
+
+Simple implementation of an scalar AutoDifferentiation module for learning purpose. This module defines a type `Variable` and mathematical operations for this type. In each operation, a backward callback function `BackwardFn` is generated, the output of the operation is also variable and this new instance records the inputs and outputs of the operation as well as defined the backward operation.
 
 # Variable and BackwardFn
 
 The main type used in this module is `Variable` which is defined as shown below. This object contains information about the actual value `Val` of the variable, the gradient `Grad` with respect to this variable and a way to perfom the backward propagation `BackwardHandler`.
+
 ```go
 type Variable struct {
 	Val             float64
@@ -13,6 +15,7 @@ type Variable struct {
 ```
 
 The `BackwardHandler` is defined as the follow interface which defines the `Backward` function. When an instance of this interface is created, the inputs and outputs involved in the operation that resulted into this variable are attached to the instance.
+
 ```go
 type BackwardFn interface {
 	Backward(l float64)
@@ -20,6 +23,7 @@ type BackwardFn interface {
 ```
 
 # Simple Test
+
 ```go
 import (
     "fmt"
