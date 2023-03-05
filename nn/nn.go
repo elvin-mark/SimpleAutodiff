@@ -1,8 +1,6 @@
 package nn
 
 import (
-	"math/rand"
-
 	"github.com/elvin-mark/SimpleAutodiff/data"
 )
 
@@ -19,18 +17,8 @@ type LinearLayer struct {
 }
 
 func NewLinearLayer(InFeatures, OutFeatures int) (l Layer) {
-	W := [][]*data.Variable{}
-	b := []*data.Variable{}
-	for i := 0; i < InFeatures; i++ {
-		tmp := []*data.Variable{}
-		for j := 0; j < OutFeatures; j++ {
-			tmp = append(tmp, data.NewVariable(rand.NormFloat64()))
-		}
-		W = append(W, tmp)
-	}
-	for j := 0; j < OutFeatures; j++ {
-		b = append(b, data.NewVariable(rand.NormFloat64()))
-	}
+	W := data.NewMatrix(InFeatures, OutFeatures)
+	b := data.NewVector(OutFeatures)
 	return &LinearLayer{
 		W:           W,
 		b:           b,
@@ -40,19 +28,7 @@ func NewLinearLayer(InFeatures, OutFeatures int) (l Layer) {
 }
 
 func (l *LinearLayer) Forward(x [][]*data.Variable) (o [][]*data.Variable) {
-	N := len(x)
-	for k := 0; k < N; k++ {
-		tmp := []*data.Variable{}
-		for j := 0; j < l.OutFeatures; j++ {
-			s := data.NewVariable(0)
-			for i := 0; i < l.InFeatures; i++ {
-				s = s.Add(x[k][i].Mul(l.W[i][j]))
-			}
-			s = s.Add(l.b[j])
-			tmp = append(tmp, s)
-		}
-		o = append(o, tmp)
-	}
+	o = data.GEMM(x, l.W, l.b)
 	return
 }
 
