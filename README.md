@@ -1,10 +1,10 @@
 # SimpleAutodiff
 
-Simple implementation of an scalar AutoDifferentiation module for learning purpose. This module defines a type `Variable` and mathematical operations for this type. In each operation, a backward callback function `BackwardFn` is generated, the output of the operation is also variable and this new instance records the inputs and outputs of the operation as well as defined the backward operation.
+Simple implementation of an scalar AutoDifferentiation module for learning purpose. This module defines a type `Variable` and mathematical operations for this type. In each operation, a backward callback function `BackwardFn` is generated, the output of the operation is also a variable, and this new variable stores the inputs and outputs of the operation, and defined the backward operation.
 
 # Variable and BackwardFn
 
-The main type used in this module is `Variable` which is defined as shown below. This object contains information about the actual value `Val` of the variable, the gradient `Grad` with respect to this variable and a way to perfom the backward propagation `BackwardHandler`.
+The main type used in this module is `Variable`, which is defined as shown below. This object contains information about the actual value `Val` of the variable, the gradient `Grad` with respect to this variable and a way to perfom the backward propagation `BackwardHandler`.
 
 ```go
 type Variable struct {
@@ -24,6 +24,7 @@ type BackwardFn interface {
 
 # Simple Test
 
+This is a simple test showing how AutoDifferentiation works
 ```go
 import (
     "fmt"
@@ -44,5 +45,38 @@ func main(){
 	fmt.Println("da/dy = ", y.Grad)
 	fmt.Println("da/dz = ", z.Grad)
 	fmt.Println("da/dw = ", w.Grad)
+}
+```
+
+# Simple Neural Network Training
+```go
+import (
+    "fmt"
+	data "github.com/elvin-mark/SimpleAutodiff/data"
+	datasets "github.com/elvin-mark/SimpleAutodiff/datasets"
+	nn "github.com/elvin-mark/SimpleAutodiff/nn"
+	utils "github.com/elvin-mark/SimpleAutodiff/utils"
+)
+
+func main(){
+	ds_x, ds_y := datasets.Toy2DDataset(20)
+	dl := datasets.NewDataLoader(ds_x, ds_y, 2)
+	model := nn.NewSequentialLayer([]nn.Layer{
+		nn.NewLinearLayer(2, 10),
+		nn.NewReLULayer(),
+		nn.NewLinearLayer(10, 5),
+		nn.NewReLULayer(),
+		nn.NewLinearLayer(5, 2),
+	})
+	optim := nn.NewSGDOptimizer(model.Parameters(), 0.1)
+	crit := nn.NewCrossEntropyLoss()
+
+	for epoch := 0; epoch < 20; epoch++ {
+		utils.TrainOneEpoch(model, crit, optim, dl)
+	}
+	o := model.Forward(ds_x)
+	for i, e := range o {
+		fmt.Println(e[0].Val, e[1].Val, ds_y[i][0].Val)
+	}
 }
 ```
